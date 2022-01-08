@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/fepweb;AUTO_SERVER=TRUE
+    username: sa
+    password: sa
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+h2:
+  console:
+    enabled: true
+api:
+  cors-origin: "http://localhost.:4200"
+  path-armazenamento: ${user.home}
+
