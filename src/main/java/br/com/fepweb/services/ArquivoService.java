@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -74,6 +75,11 @@ public class ArquivoService extends BaseService<Arquivo> {
             throw new InfraException("Arquivo " + file.getContentType() + " não permitido.");
         }
 
+    }
+
+    public void excluirArquivosCliente(Long clienteID){
+        List<Arquivo> arquivos = repository.listarArquivosPorClienteID(clienteID);
+        arquivos.forEach(a -> excluir(a.getId()));
     }
 
     public void excluir(Long id) {
