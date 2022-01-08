@@ -12,6 +12,6 @@ h2:
   console:
     enabled: true
 api:
-  cors-origin: "http://localhost.:4200"
+  cors-origin: "*"
   path-armazenamento: ${user.home}
 
