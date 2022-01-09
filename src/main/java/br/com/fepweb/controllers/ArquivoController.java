@@ -5,6 +5,8 @@ import br.com.fepweb.services.ArquivoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,6 @@ public class ArquivoController extends BaseController<Arquivo> {
     @PostMapping(path = "/upload/{clienteId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity upload(@RequestParam MultipartFile file,
                                  @PathVariable("clienteId") Long clienteId) {
-
         service.upload(file, clienteId);
 
         return new ResponseEntity(UPLOAD_MESSAGE, HttpStatus.OK);
@@ -45,8 +46,15 @@ public class ArquivoController extends BaseController<Arquivo> {
     }
 
 
-    @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Apagar", notes = "Apaga o registro correspondente ao id informado.")
+    @GetMapping("/cliente/{id}")
+    @ApiOperation(value = "Listar arquivos cliente", notes = "Lista dados com paginação.")
+    public Page<Arquivo> listarArquivoCliente(@PathVariable("id") long id,
+                                              @RequestParam(value = "search", defaultValue = "", required = false) String search,
+                                              Pageable pageable) {
+        return service.listarArquivoCliente(id, pageable, search);
+    }
+
+
     public void apagarPorId(@PathVariable("id") Long id) {
         service.excluir(id);
     }

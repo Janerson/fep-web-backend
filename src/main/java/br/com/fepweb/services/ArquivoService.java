@@ -6,6 +6,8 @@ import br.com.fepweb.entity.ClientePJ;
 import br.com.fepweb.exception.InfraException;
 import br.com.fepweb.repository.ArquivoRespository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -86,5 +88,9 @@ public class ArquivoService extends BaseService<Arquivo> {
         Arquivo arquivo = buscarPorID(id);
         storageService.remover(arquivo);
         apagarPorId(id);
+    }
+
+    public Page<Arquivo> listarArquivoCliente(long id, Pageable pageable, String str) {
+        return repository.listarArquivosClienteID(pageable,id, str);
     }
 }
